@@ -1,4 +1,4 @@
-# Evidence Screenshots
+# assets
 
 Add only redacted screenshots to this directory.
 
