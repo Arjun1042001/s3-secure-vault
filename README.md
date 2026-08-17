@@ -52,7 +52,7 @@ flowchart LR
 ├── README.md
 ├── docs/
 │   └── architecture.md
-├── evidence/
+├── assets/
 │   └── README.md
 └── sample-files/
     ├── day1.txt
