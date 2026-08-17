@@ -1,0 +1,3 @@
+AWS Secure S3 Document Vault
+
+This project demonstrates private Amazon S3 storage with public access blocked, ACLs disabled, default SSE-S3 encryption, object versioning, tags, and lifecycle management for noncurrent versions.
