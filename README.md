@@ -1,12 +1,14 @@
 # AWS Secure S3 Document Vault
 
+Secure document storage on Amazon S3
+
 A beginner-friendly AWS portfolio project demonstrating how to create and manage a secure Amazon S3 document vault.
 
-## Project Overview
+## What this project does
 
 This project stores documents in a private S3 bucket and applies practical security and data-protection controls. It was built using the AWS Management Console in the `us-east-1` Region.
 
-## Architecture
+## Architecture / How it works
 
 ```mermaid
 flowchart LR
@@ -16,6 +18,40 @@ flowchart LR
     VER --> LIFE[Lifecycle management]
     S3 --> TAG[Project and environment tags]
 ```
+
+An authorized AWS user reaches the private S3 bucket over an IAM-authorized HTTPS request. Objects are encrypted with SSE-S3, versioning keeps earlier versions, a lifecycle rule cleans up noncurrent versions, and project and environment tags identify the bucket. Further detail is in `docs/architecture.md`.
+
+## Tech stack
+
+![AWS](https://img.shields.io/badge/AWS-%23232F3E.svg?style=for-the-badge&logo=amazonwebservices&logoColor=white)
+![Amazon S3](https://img.shields.io/badge/Amazon_S3-569A31.svg?style=for-the-badge&logo=amazons3&logoColor=white)
+![IAM](https://img.shields.io/badge/AWS_IAM-232F3E.svg?style=for-the-badge&logo=amazonwebservices&logoColor=white)
+
+## Repository structure
+
+```text
+.
+├── README.md
+├── docs/
+│   └── architecture.md
+├── assets/
+│   └── README.md
+├── evidence/
+│   └── README.md
+└── sample-files/
+    ├── day1.txt
+    └── project-description.txt
+```
+
+`evidence/` holds guidance for adding only redacted screenshots; no unredacted console screenshots are stored in this repository.
+
+## Key work demonstrated
+
+- Created a private S3 bucket with Block Public Access enabled and ACLs disabled (Bucket owner enforced).
+- Enabled default server-side encryption with Amazon S3 managed keys (SSE-S3) and bucket versioning.
+- Tested version recovery by uploading two versions of `day1.txt` and verifying both version IDs.
+- Added a lifecycle rule to delete noncurrent object versions after 30 days.
+- Organized uploads under the `documents/` prefix, with a sample project description stored there.
 
 ## Implemented Features
 
@@ -45,36 +81,24 @@ flowchart LR
 5. Confirmed the lifecycle rule is active.
 6. Confirmed the sample document is stored under `documents/`.
 
-## Repository Structure
-
-```text
-.
-├── README.md
-├── docs/
-│   └── architecture.md
-├── assets/
-│   └── README.md
-└── sample-files/
-    ├── day1.txt
-    └── project-description.txt
-```
-
 ## Interview Explanation
 
-> I created a private S3 document vault with public access blocked, ACLs disabled, default SSE-S3 encryption, versioning, tagging, and lifecycle management. I tested versioning by uploading two versions of the same object and configured noncurrent versions to expire after 30 days. This project taught me how S3 security, recovery, and cost controls work together.
+> I created a private S3 document vault with public access blocked, ACLs disabled, default SSE-S3 encryption, versioning, and a lifecycle rule. I verified the settings through the AWS Console and tested recovery by uploading two versions of a file. The project focuses on secure defaults and evidence-based verification.
 
 ## Future Improvements
 
-- Rebuild the project using Terraform
-- Use a customer-managed AWS KMS key where stronger key control is required
-- Add CloudTrail data events and access logging
-- Add automated security checks in a CI/CD pipeline
-- Add a least-privilege IAM role for application access
+- Add Terraform configuration to provision the bucket and controls.
+- Add an IAM policy example with least-privilege permissions.
+- Add a lifecycle rule for moving older data to Amazon S3 Glacier.
+- Add AWS CloudTrail and Amazon S3 server access logging.
+- Add a private access pattern using Amazon VPC endpoints.
 
-## Cost Management
+## Cost Considerations
 
-The bucket contains only small training files. Lifecycle management helps prevent old versions from accumulating indefinitely. Resources should be reviewed and deleted when no longer needed.
+- Amazon S3 charges are based on storage usage.
+- This project uses small sample files and is expected to remain within the AWS Free Tier.
+- Deleting the bucket or objects after use avoids further charges.
 
 ## Important Note
 
-Amazon S3 uses object key prefixes rather than traditional folders. The `documents/` folder shown in the console is a prefix in the object key.
+This project is a learning portfolio and does not contain production credentials, real customer documents, or sensitive account information.
